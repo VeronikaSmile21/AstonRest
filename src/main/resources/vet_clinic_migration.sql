@@ -29,10 +29,10 @@ CREATE SCHEMA IF NOT EXISTS `vet_clinic` ;
 -- Table structure for table `animal`
 --
 
-DROP TABLE IF EXISTS `animal`;
+DROP TABLE IF EXISTS `vet_clinic`.`animal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `animal` (
+CREATE TABLE `vet_clinic`.`animal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `price_coeff` float DEFAULT NULL,
@@ -44,20 +44,20 @@ CREATE TABLE `animal` (
 -- Dumping data for table `animal`
 --
 
-LOCK TABLES `animal` WRITE;
-/*!40000 ALTER TABLE `animal` DISABLE KEYS */;
-INSERT INTO `animal` VALUES (1,'Cat',1),(2,'Dog',1.2),(3,'Snake',1.5);
-/*!40000 ALTER TABLE `animal` ENABLE KEYS */;
+LOCK TABLES `vet_clinic`.`animal` WRITE;
+/*!40000 ALTER TABLE `vet_clinic`.`animal` DISABLE KEYS */;
+INSERT INTO `vet_clinic`.`animal` VALUES (1,'Cat',1),(2,'Dog',1.2),(3,'Snake',1.5);
+/*!40000 ALTER TABLE `vet_clinic`.`animal` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `client`
 --
 
-DROP TABLE IF EXISTS `client`;
+DROP TABLE IF EXISTS `vet_clinic`.`client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `client` (
+CREATE TABLE `vet_clinic`.`client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
@@ -69,20 +69,20 @@ CREATE TABLE `client` (
 -- Dumping data for table `client`
 --
 
-LOCK TABLES `client` WRITE;
-/*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'Alex','111'),(2,'Jessica','222'),(3,'John','333'),(7,'Oliver','44444');
-/*!40000 ALTER TABLE `client` ENABLE KEYS */;
+LOCK TABLES `vet_clinic`.`client` WRITE;
+/*!40000 ALTER TABLE `vet_clinic`.`client` DISABLE KEYS */;
+INSERT INTO `vet_clinic`.`client` VALUES (1,'Alex','111'),(2,'Jessica','222'),(3,'John','333'),(7,'Oliver','44444');
+/*!40000 ALTER TABLE `vet_clinic`.`client` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `vet_clinic`.`order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
+CREATE TABLE `vet_clinic`.`order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `client_id` int(11) DEFAULT NULL,
   `service_id` int(11) DEFAULT NULL,
@@ -98,20 +98,20 @@ CREATE TABLE `order` (
 -- Dumping data for table `order`
 --
 
-LOCK TABLES `order` WRITE;
-/*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,1,1,1,'2024-01-02 10:00:00',1,100),(2,1,2,1,'2024-01-02 10:00:00',1,150),(3,2,2,3,'2024-01-02 10:00:00',2,290);
-/*!40000 ALTER TABLE `order` ENABLE KEYS */;
+LOCK TABLES `vet_clinic`.`order` WRITE;
+/*!40000 ALTER TABLE `vet_clinic`.`order` DISABLE KEYS */;
+INSERT INTO `vet_clinic`.`order` VALUES (1,1,1,1,'2024-01-02 10:00:00',1,100),(2,1,2,1,'2024-01-02 10:00:00',1,150),(3,2,2,3,'2024-01-02 10:00:00',2,290);
+/*!40000 ALTER TABLE `vet_clinic`.`order` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `service`
 --
 
-DROP TABLE IF EXISTS `service`;
+DROP TABLE IF EXISTS `vet_clinic`.`service`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service` (
+CREATE TABLE `vet_clinic`.`service` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `price` float DEFAULT NULL,
@@ -123,20 +123,20 @@ CREATE TABLE `service` (
 -- Dumping data for table `service`
 --
 
-LOCK TABLES `service` WRITE;
-/*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'Vaccination',500),(2,'Chipping',200),(3,'Castration',700),(4,'Clinical_examination',150);
-/*!40000 ALTER TABLE `service` ENABLE KEYS */;
+LOCK TABLES `vet_clinic`.`service` WRITE;
+/*!40000 ALTER TABLE `vet_clinic`.`service` DISABLE KEYS */;
+INSERT INTO `vet_clinic`.`service` VALUES (1,'Vaccination',500),(2,'Chipping',200),(3,'Castration',700),(4,'Clinical_examination',150);
+/*!40000 ALTER TABLE `vet_clinic`.`service` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
 -- Table structure for table `service_animal`
 --
 
-DROP TABLE IF EXISTS `service_animal`;
+DROP TABLE IF EXISTS `vet_clinic`.`service_animal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `service_animal` (
+CREATE TABLE `vet_clinic`.`service_animal` (
   `service_id` int(11) NOT NULL,
   `animal_id` int(11) NOT NULL,
   PRIMARY KEY (`service_id`,`animal_id`)
@@ -147,10 +147,10 @@ CREATE TABLE `service_animal` (
 -- Dumping data for table `service_animal`
 --
 
-LOCK TABLES `service_animal` WRITE;
-/*!40000 ALTER TABLE `service_animal` DISABLE KEYS */;
-INSERT INTO `service_animal` VALUES (1,1),(1,2),(2,1),(2,2),(2,3),(3,1),(3,2);
-/*!40000 ALTER TABLE `service_animal` ENABLE KEYS */;
+LOCK TABLES `vet_clinic`.`service_animal` WRITE;
+/*!40000 ALTER TABLE `vet_clinic`.`service_animal` DISABLE KEYS */;
+INSERT INTO `vet_clinic`.`service_animal` VALUES (1,1),(1,2),(2,1),(2,2),(2,3),(3,1),(3,2);
+/*!40000 ALTER TABLE `vet_clinic`.`service_animal` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
