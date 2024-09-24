@@ -13,7 +13,7 @@ public class OrderDtomapperImpl implements OrderDtomapper {
         orderEntity.setClientId(MapperUtil.parseInteger(incomingDto.getClientId()));
         orderEntity.setServiceId(MapperUtil.parseInteger(incomingDto.getServiceId()));
         orderEntity.setAnimalId(MapperUtil.parseInteger(incomingDto.getAnimalId()));
-        orderEntity.setDate(MapperUtil.parseInteger(incomingDto.getDate()));
+        orderEntity.setDate(MapperUtil.parseDate(incomingDto.getDate()));
         orderEntity.setStatus(MapperUtil.parseInteger(incomingDto.getStatus()));
         orderEntity.setCost(MapperUtil.parseInteger(incomingDto.getCost()));
         return orderEntity;
@@ -26,7 +26,7 @@ public class OrderDtomapperImpl implements OrderDtomapper {
         orderOutGoingDto.setClientId(orderEntity.getClientId());
         orderOutGoingDto.setServiceId(orderEntity.getServiceId());
         orderOutGoingDto.setAnimalId(orderEntity.getAnimalId());
-        orderOutGoingDto.setDate(orderEntity.getDate());
+        orderOutGoingDto.setDate(String.valueOf(orderEntity.getDate()));
         orderOutGoingDto.setStatus(orderEntity.getStatus());
         orderOutGoingDto.setCost(orderEntity.getCost());
         return orderOutGoingDto;

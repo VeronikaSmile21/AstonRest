@@ -1,6 +1,6 @@
 package org.example.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class OrderEntity {
     private int id;
@@ -43,11 +43,11 @@ public class OrderEntity {
         this.animalId = animalId;
     }
 
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

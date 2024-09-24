@@ -5,7 +5,7 @@ public class OrderOutGoingDto {
     private int clientId;
     private int serviceId;
     private int animalId;
-    private int date;
+    private String date;
     private int status;
     private float cost;
 
@@ -41,11 +41,11 @@ public class OrderOutGoingDto {
         this.animalId = animalId;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -1,5 +1,7 @@
 package org.example.servlet.mapper;
 
+import java.sql.Date;
+
 public class MapperUtil {
     public static int parseInteger(String input) {
 
@@ -25,5 +27,18 @@ public class MapperUtil {
             }
         }
         return id;
+    }
+
+    public static Date parseDate(String input) {
+
+        Date date  = null;
+        if (input != null) {
+            try {
+                date = Date.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                return date;
+            }
+        }
+        return date;
     }
 }

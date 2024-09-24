@@ -19,7 +19,7 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
         // Здесь используем try with resources
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM order where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order` where id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -40,7 +40,7 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
         try (Connection connection = connectionManager.getConnection()) {
             if (id > 0) {
                 //update
-                PreparedStatement pstmt = connection.prepareStatement("DELETE FROM order WHERE id = ?");
+                PreparedStatement pstmt = connection.prepareStatement("DELETE FROM `order` WHERE id = ?");
                 pstmt.setInt(1, id);
                 int affectedRows = pstmt.executeUpdate();
 
@@ -62,7 +62,7 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
         List<OrderEntity> result = new ArrayList<>();
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from order");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from `order`");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSetMapper.map(resultSet));
@@ -82,11 +82,11 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
             if (orderEntity.getId() > 0) {
                 //update
                 PreparedStatement pstmt = connection.prepareStatement(
-                        "UPDATE order SET client_id = ?, service_id = ?, animal_id = ?, date = ?, status = ?, cost = ? WHERE id = ?");
+                        "UPDATE `order` SET client_id = ?, service_id = ?, animal_id = ?, date = ?, status = ?, cost = ? WHERE id = ?");
                 pstmt.setInt(1, orderEntity.getClientId());
                 pstmt.setInt(2, orderEntity.getServiceId());
                 pstmt.setInt(3, orderEntity.getAnimalId());
-                pstmt.setInt(4, orderEntity.getDate());
+                pstmt.setDate(4, orderEntity.getDate());
                 pstmt.setInt(5, orderEntity.getStatus());
                 pstmt.setFloat(6, orderEntity.getCost());
                 pstmt.setInt(7, orderEntity.getId());
@@ -99,12 +99,12 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
             } else {
                 //insert
                 PreparedStatement pstmt = connection.prepareStatement(
-                        "INSERT INTO order (client_id, service_id, animal_id, date, status, cost) VALUES (?, ?, ?, ?, ?, ?)",
+                        "INSERT INTO `order` (client_id, service_id, animal_id, date, status, cost) VALUES (?, ?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
                 pstmt.setInt(1, orderEntity.getClientId());
                 pstmt.setInt(2, orderEntity.getServiceId());
                 pstmt.setInt(3, orderEntity.getAnimalId());
-                pstmt.setInt(4, orderEntity.getDate());
+                pstmt.setDate(4, orderEntity.getDate());
                 pstmt.setInt(5, orderEntity.getStatus());
                 pstmt.setFloat(6, orderEntity.getCost());
                 int affectedRows = pstmt.executeUpdate();
