@@ -9,9 +9,16 @@ import org.example.servlet.dto.OrderOutGoingDto;
 
 
 public class OrderDtomapperImpl implements OrderDtomapper {
-    AnimalDtomapper animalDtomapper = new AnimalDtomapperImpl();
-    ClientDtomapper clientDtomapper = new ClientDtomapperImpl();
-    ServiceDtomapper serviceDtomapper = new ServiceDtomapperImpl();
+
+    private static AnimalDtomapper animalDtomapper = AnimalDtomapperImpl.getInstance();
+    private static ClientDtomapper clientDtomapper = ClientDtomapperImpl.getInstance();
+    private static ServiceDtomapper serviceDtomapper = ServiceDtomapperImpl.getInstance();
+
+    private static OrderDtomapper instance = new OrderDtomapperImpl();
+
+    public static OrderDtomapper getInstance() {
+         return instance;
+    }
 
     @Override
     public OrderEntity map(OrderIncomingDto incomingDto) {
@@ -37,9 +44,9 @@ public class OrderDtomapperImpl implements OrderDtomapper {
     public OrderOutGoingDto map(OrderEntity orderEntity) {
         OrderOutGoingDto orderOutGoingDto = new OrderOutGoingDto();
         orderOutGoingDto.setId(orderEntity.getId());
-        orderOutGoingDto.setClient(clientDtomapper.map(orderEntity.getClient()));
-        orderOutGoingDto.setService(serviceDtomapper.map(orderEntity.getService()));
-        orderOutGoingDto.setAnimal(animalDtomapper.map(orderEntity.getAnimal()));
+        orderOutGoingDto.setClient(ClientDtomapperImpl.getInstance().map(orderEntity.getClient()));
+        orderOutGoingDto.setService(ServiceDtomapperImpl.getInstance().map(orderEntity.getService()));
+        orderOutGoingDto.setAnimal(AnimalDtomapperImpl.getInstance().map(orderEntity.getAnimal()));
         orderOutGoingDto.setDate(String.valueOf(orderEntity.getDate()));
         orderOutGoingDto.setStatus(orderEntity.getStatus());
         orderOutGoingDto.setCost(orderEntity.getCost());

@@ -1,9 +1,13 @@
 package org.example.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientEntity {
     private int id;
     private String name;
     private String phone;
+    private List<OrderEntity> orders = new ArrayList<OrderEntity>();
 
     public int getId() {
         return id;
@@ -30,5 +34,12 @@ public class ClientEntity {
         this.phone = phone;
     }
 
+    public List<OrderEntity> getOrders() {
+        return orders;
     }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
+    }
+}
 

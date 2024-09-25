@@ -6,6 +6,13 @@ import org.example.servlet.dto.ServiceOutGoingDto;
 
 
 public class ServiceDtomapperImpl implements ServiceDtomapper {
+
+    private static ServiceDtomapper instance = new ServiceDtomapperImpl();
+
+    public static ServiceDtomapper getInstance() {
+        return instance;
+    }
+
     @Override
     public ServiceEntity map(ServiceIncomingDto incomingDto) {
         ServiceEntity serviceEntity = new ServiceEntity();

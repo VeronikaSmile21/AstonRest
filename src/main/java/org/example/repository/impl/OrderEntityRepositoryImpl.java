@@ -145,4 +145,32 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
         }
         return orderEntity;
     }
+
+    @Override
+    public List<OrderEntity> findByClientId(int clientId) {
+        List<OrderEntity> result = new ArrayList<>();
+        try {
+            Connection connection = connectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT o.id as o_id, o.date as o_date, o.status as o_status, o.cost as o_cost, " +
+                            "a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff, " +
+                            "c.id as c_id, c.name as c_name, c.phone as c_phone, " +
+                            "s.id as s_id, s.name as s_name, s.price as s_price " +
+                            "FROM `order` as o " +
+                            "inner join `animal` as a on o.animal_id = a.id " +
+                            "inner join `client` as c on o.client_id = c.id " +
+                            "inner join `service` as s on o.service_id = s.id " +
+                            "where c.id = ?");
+            preparedStatement.setInt(1, clientId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                result.add(resultSetMapper.map(resultSet));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return result;
+    }
 }

@@ -29,4 +29,9 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderEntity> findAll() {
         return orderEntityRepository.findAll();
     }
+
+    @Override
+    public List<OrderEntity> findByClientId(Integer clientId) {
+        return orderEntityRepository.findByClientId(clientId);
+    }
 }

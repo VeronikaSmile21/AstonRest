@@ -12,4 +12,6 @@ public interface OrderService {
     OrderEntity findById(Integer id);
 
     List<OrderEntity> findAll();
+
+    List<OrderEntity> findByClientId(Integer clientId);
 }

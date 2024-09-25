@@ -6,6 +6,13 @@ import org.example.servlet.dto.AnimalOutGoingDto;
 
 
 public class AnimalDtomapperImpl implements AnimalDtomapper {
+
+    private static AnimalDtomapper instance = new AnimalDtomapperImpl();
+
+    public static AnimalDtomapper getInstance() {
+        return instance;
+    }
+
     @Override
     public AnimalEntity map(AnimalIncomingDto incomingDto) {
         AnimalEntity animalEntity = new AnimalEntity();

@@ -1,9 +1,15 @@
 package org.example.servlet.dto;
 
+import org.example.model.OrderEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientOutGoingDto {
     private int id;
     private String name;
     private String phone;
+    private List<OrderOutGoingDto> orders = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -28,5 +34,13 @@ public class ClientOutGoingDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<OrderOutGoingDto> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderOutGoingDto> orders) {
+        this.orders = orders;
     }
 }
