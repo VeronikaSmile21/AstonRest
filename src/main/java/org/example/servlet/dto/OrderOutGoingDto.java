@@ -2,9 +2,9 @@ package org.example.servlet.dto;
 
 public class OrderOutGoingDto {
     private int id;
-    private int clientId;
-    private int serviceId;
-    private int animalId;
+    private ClientOutGoingDto client;
+    private ServiceOutGoingDto service;
+    private AnimalOutGoingDto animal;
     private String date;
     private int status;
     private float cost;
@@ -17,28 +17,28 @@ public class OrderOutGoingDto {
         this.id = id;
     }
 
-    public int getClientId() {
-        return clientId;
+    public ClientOutGoingDto getClient() {
+        return client;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setClient(ClientOutGoingDto client) {
+        this.client = client;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public ServiceOutGoingDto getService() {
+        return service;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
+    public void setService(ServiceOutGoingDto service) {
+        this.service = service;
     }
 
-    public int getAnimalId() {
-        return animalId;
+    public AnimalOutGoingDto getAnimal() {
+        return animal;
     }
 
-    public void setAnimalId(int animalId) {
-        this.animalId = animalId;
+    public void setAnimal(AnimalOutGoingDto animal) {
+        this.animal = animal;
     }
 
     public String getDate() {

@@ -19,7 +19,9 @@ public class AnimalEntityRepositoryImpl implements AnimalEntityRepository {
         // Здесь используем try with resources
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM animal where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff " +
+                            " FROM animal as a where a.id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -62,7 +64,9 @@ public class AnimalEntityRepositoryImpl implements AnimalEntityRepository {
         List<AnimalEntity> result = new ArrayList<>();
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from animal");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff " +
+                    " from animal as a");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSetMapper.map(resultSet));

@@ -19,7 +19,16 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
         // Здесь используем try with resources
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order` where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT o.id as o_id, o.date as o_date, o.status as o_status, o.cost as o_cost, " +
+                            "a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff, " +
+                            "c.id as c_id, c.name as c_name, c.phone as c_phone, " +
+                            "s.id as s_id, s.name as s_name, s.price as s_price " +
+                            "FROM `order` as o " +
+                            "inner join `animal` as a on o.animal_id = a.id " +
+                            "inner join `client` as c on o.client_id = c.id " +
+                            "inner join `service` as s on o.service_id = s.id " +
+                             "where o.id = ? ");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -62,7 +71,15 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
         List<OrderEntity> result = new ArrayList<>();
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from `order`");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT o.id as o_id, o.date as o_date, o.status as o_status, o.cost as o_cost, " +
+                            "a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff, " +
+                            "c.id as c_id, c.name as c_name, c.phone as c_phone, " +
+                            "s.id as s_id, s.name as s_name, s.price as s_price " +
+                            "FROM `order` as o " +
+                            "inner join `animal` as a on o.animal_id = a.id " +
+                            "inner join `client` as c on o.client_id = c.id " +
+                            "inner join `service` as s on o.service_id = s.id");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSetMapper.map(resultSet));
@@ -83,9 +100,9 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
                 //update
                 PreparedStatement pstmt = connection.prepareStatement(
                         "UPDATE `order` SET client_id = ?, service_id = ?, animal_id = ?, date = ?, status = ?, cost = ? WHERE id = ?");
-                pstmt.setInt(1, orderEntity.getClientId());
-                pstmt.setInt(2, orderEntity.getServiceId());
-                pstmt.setInt(3, orderEntity.getAnimalId());
+                pstmt.setInt(1, orderEntity.getClient().getId());
+                pstmt.setInt(2, orderEntity.getService().getId());
+                pstmt.setInt(3, orderEntity.getAnimal().getId());
                 pstmt.setDate(4, orderEntity.getDate());
                 pstmt.setInt(5, orderEntity.getStatus());
                 pstmt.setFloat(6, orderEntity.getCost());
@@ -101,9 +118,9 @@ public class OrderEntityRepositoryImpl implements OrderEntityRepository {
                 PreparedStatement pstmt = connection.prepareStatement(
                         "INSERT INTO `order` (client_id, service_id, animal_id, date, status, cost) VALUES (?, ?, ?, ?, ?, ?)",
                         Statement.RETURN_GENERATED_KEYS);
-                pstmt.setInt(1, orderEntity.getClientId());
-                pstmt.setInt(2, orderEntity.getServiceId());
-                pstmt.setInt(3, orderEntity.getAnimalId());
+                pstmt.setInt(1, orderEntity.getClient().getId());
+                pstmt.setInt(2, orderEntity.getService().getId());
+                pstmt.setInt(3, orderEntity.getAnimal().getId());
                 pstmt.setDate(4, orderEntity.getDate());
                 pstmt.setInt(5, orderEntity.getStatus());
                 pstmt.setFloat(6, orderEntity.getCost());

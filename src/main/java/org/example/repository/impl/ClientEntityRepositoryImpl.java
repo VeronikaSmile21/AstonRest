@@ -19,7 +19,8 @@ public class ClientEntityRepositoryImpl implements ClientEntityRepository {
         // Здесь используем try with resources
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM client where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT c.id as c_id, c.name as c_name, c.phone as c_phone FROM client as c where c.id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -62,7 +63,8 @@ public class ClientEntityRepositoryImpl implements ClientEntityRepository {
         List<ClientEntity> result = new ArrayList<>();
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from client");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select c.id as c_id, c.name as c_name, c.phone as c_phone from client as c");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSetMapper.map(resultSet));

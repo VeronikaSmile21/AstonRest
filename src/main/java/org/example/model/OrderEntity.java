@@ -4,9 +4,9 @@ import java.sql.Date;
 
 public class OrderEntity {
     private int id;
-    private int clientId;
-    private int serviceId;
-    private int animalId;
+    private ClientEntity client;
+    private ServiceEntity service;
+    private AnimalEntity animal;
     private Date date;
     private int status;
     private float cost;
@@ -19,28 +19,28 @@ public class OrderEntity {
         this.id = id;
     }
 
-    public int getClientId() {
-        return clientId;
+    public ClientEntity getClient() {
+        return client;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setClient(ClientEntity client) {
+        this.client = client;
     }
 
-    public int getServiceId() {
-        return serviceId;
+    public ServiceEntity getService() {
+        return service;
     }
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
+    public void setService(ServiceEntity service) {
+        this.service = service;
     }
 
-    public int getAnimalId() {
-        return animalId;
+    public AnimalEntity getAnimal() {
+        return animal;
     }
 
-    public void setAnimalId(int animalId) {
-        this.animalId = animalId;
+    public void setAnimal(AnimalEntity animal) {
+        this.animal = animal;
     }
 
     public Date getDate() {

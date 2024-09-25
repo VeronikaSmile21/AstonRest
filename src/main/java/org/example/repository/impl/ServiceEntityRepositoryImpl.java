@@ -19,7 +19,8 @@ public class ServiceEntityRepositoryImpl implements ServiceEntityRepository {
         // Здесь используем try with resources
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM service where id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT s.id as s_id, s.name as s_name, s.price as s_price FROM service as s where s.id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -62,7 +63,8 @@ public class ServiceEntityRepositoryImpl implements ServiceEntityRepository {
         List<ServiceEntity> result = new ArrayList<>();
         try {
             Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from service");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select s.id as s_id, s.name as s_name, s.price as s_price from service as s");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSetMapper.map(resultSet));

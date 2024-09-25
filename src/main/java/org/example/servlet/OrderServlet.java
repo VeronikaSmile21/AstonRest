@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
@@ -39,7 +40,9 @@ public class OrderServlet extends HttpServlet {
             }
         } else {
             List<OrderEntity> orderEntities = orderService.findAll();
-            gson.toJson(orderEntities, printWriter);
+            List<OrderOutGoingDto> result = orderEntities.stream().map(o ->
+                    orderDtomapper.map(o)).collect(Collectors.toList());
+            gson.toJson(result, printWriter);
         }
         printWriter.close();
     }
