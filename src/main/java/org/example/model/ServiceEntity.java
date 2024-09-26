@@ -1,9 +1,13 @@
 package org.example.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServiceEntity {
     private int id;
     private String name;
     private float price;
+    List<AnimalEntity> animals = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -30,6 +34,12 @@ public class ServiceEntity {
         this.price = price;
     }
 
-
+    public List<AnimalEntity> getAnimals() {
+        return animals;
     }
+
+    public void setAnimals(List<AnimalEntity> animals) {
+        this.animals = animals;
+    }
+}
 

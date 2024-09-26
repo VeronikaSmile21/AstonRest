@@ -23,11 +23,13 @@ public class ServiceDtomapperImpl implements ServiceDtomapper {
     }
 
     @Override
-    public ServiceOutGoingDto map(ServiceEntity orderEntity) {
+    public ServiceOutGoingDto map(ServiceEntity serviceEntity) {
         ServiceOutGoingDto serviceOutGoingDto = new ServiceOutGoingDto();
-        serviceOutGoingDto.setId(orderEntity.getId());
-        serviceOutGoingDto.setName(orderEntity.getName());
-        serviceOutGoingDto.setPrice(orderEntity.getPrice());
+        serviceOutGoingDto.setId(serviceEntity.getId());
+        serviceOutGoingDto.setName(serviceEntity.getName());
+        serviceOutGoingDto.setPrice(serviceEntity.getPrice());
+        serviceOutGoingDto.setAnimals(serviceEntity.getAnimals().stream().map(a ->
+                AnimalDtomapperImpl.getInstance().map(a)).toList());
         return serviceOutGoingDto;
     }
 

@@ -1,9 +1,13 @@
 package org.example.servlet.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServiceOutGoingDto {
     private int id;
     private String name;
     private float price;
+    List<AnimalOutGoingDto> animals = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -28,5 +32,13 @@ public class ServiceOutGoingDto {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public List<AnimalOutGoingDto> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<AnimalOutGoingDto> animals) {
+        this.animals = animals;
     }
 }

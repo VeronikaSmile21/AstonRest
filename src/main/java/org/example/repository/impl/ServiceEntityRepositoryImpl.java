@@ -1,8 +1,11 @@
 package org.example.repository.impl;
 
 import org.example.db.ConnectionManager;
+import org.example.model.AnimalEntity;
 import org.example.model.ServiceEntity;
 import org.example.repository.ServiceEntityRepository;
+import org.example.repository.mapper.AnimalResultSetMapper;
+import org.example.repository.mapper.AnimalResultSetMapperImpl;
 import org.example.repository.mapper.ServiceResultSetMapper;
 import org.example.repository.mapper.ServiceResultSetMapperImpl;
 
@@ -12,6 +15,7 @@ import java.util.List;
 
 public class ServiceEntityRepositoryImpl implements ServiceEntityRepository {
     private ServiceResultSetMapper resultSetMapper = new ServiceResultSetMapperImpl();
+    private AnimalResultSetMapper animalMapper = new AnimalResultSetMapperImpl();
     private ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     @Override
@@ -20,15 +24,26 @@ public class ServiceEntityRepositoryImpl implements ServiceEntityRepository {
         try {
             Connection connection = connectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT s.id as s_id, s.name as s_name, s.price as s_price FROM service as s where s.id = ?");
+                    "SELECT a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff, " +
+                            "s.id as s_id, s.name as s_name, s.price as s_price " +
+                            "FROM `animal` as a " +
+                            "inner join `service_animal` as sa on sa.animal_id = a.id " +
+                            "inner join `service` as s on s.id = sa.service_id " +
+                            "where s.id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                return resultSetMapper.map(resultSet);
-            } else {
-                return null;
+            ServiceEntity serviceEntity = null;
+            List<AnimalEntity> animalEntities = new ArrayList<>();
+
+            while (resultSet.next()) {
+                if (serviceEntity == null) {
+                    serviceEntity = resultSetMapper.map(resultSet);
+                }
+                animalEntities.add(animalMapper.map(resultSet));
             }
+            serviceEntity.setAnimals(animalEntities);
+            return serviceEntity;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
