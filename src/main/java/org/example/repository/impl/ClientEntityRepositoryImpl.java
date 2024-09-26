@@ -1,6 +1,6 @@
 package org.example.repository.impl;
 
-import org.example.db.ConnectionManager;
+import org.example.db.ConnectionManagerImpl;
 import org.example.model.ClientEntity;
 import org.example.repository.ClientEntityRepository;
 import org.example.repository.mapper.ClientResultSetMapper;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ClientEntityRepositoryImpl implements ClientEntityRepository {
     private ClientResultSetMapper resultSetMapper = new ClientResultSetMapperImpl();
-    private ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private ConnectionManagerImpl connectionManager = ConnectionManagerImpl.getInstance();
 
     @Override
     public ClientEntity findById(Integer id) {
