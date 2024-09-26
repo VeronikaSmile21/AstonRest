@@ -1,9 +1,15 @@
 package org.example.servlet.dto;
 
+import org.example.model.ServiceEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnimalOutGoingDto {
     private int id;
     private String name;
     private float priceCoeff;
+    List<ServiceOutGoingDto> services = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -28,5 +34,13 @@ public class AnimalOutGoingDto {
 
     public void setPriceCoeff(float priceCoeff) {
         this.priceCoeff = priceCoeff;
+    }
+
+    public List<ServiceOutGoingDto> getServices() {
+        return services;
+    }
+
+    public void setServices(List<ServiceOutGoingDto> services) {
+        this.services = services;
     }
 }

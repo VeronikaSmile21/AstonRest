@@ -28,6 +28,8 @@ public class AnimalDtomapperImpl implements AnimalDtomapper {
         animalOutGoingDto.setId(animalEntity.getId());
         animalOutGoingDto.setName(animalEntity.getName());
         animalOutGoingDto.setPriceCoeff(animalEntity.getPriceCoeff());
+        animalOutGoingDto.setServices(animalEntity.getServices().stream().map(s ->
+                ServiceDtomapperImpl.getInstance().map(s)).toList());
         return animalOutGoingDto;
     }
 

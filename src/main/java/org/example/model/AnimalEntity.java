@@ -1,9 +1,13 @@
 package org.example.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AnimalEntity {
     private int id;
     private String name;
     private float priceCoeff;
+    List<ServiceEntity> services = new ArrayList<ServiceEntity>();
 
     public int getId() {
         return id;
@@ -28,5 +32,13 @@ public class AnimalEntity {
 
     public void setPriceCoeff(float priceCoeff) {
         this.priceCoeff = priceCoeff;
+    }
+
+    public List<ServiceEntity> getServices() {
+        return services;
+    }
+
+    public void setServices(List<ServiceEntity> services) {
+        this.services = services;
     }
 }
