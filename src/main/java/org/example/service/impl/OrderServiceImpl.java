@@ -8,7 +8,15 @@ import org.example.service.OrderService;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
-    private OrderEntityRepository orderEntityRepository = new OrderEntityRepositoryImpl();
+    private OrderEntityRepository orderEntityRepository;
+
+    public OrderServiceImpl() {
+        this.orderEntityRepository = new OrderEntityRepositoryImpl();
+    }
+
+    public OrderServiceImpl(OrderEntityRepository orderEntityRepository) {
+        this.orderEntityRepository = orderEntityRepository;
+    }
 
     @Override
     public boolean deleteById(Integer id) {

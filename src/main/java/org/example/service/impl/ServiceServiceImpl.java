@@ -8,7 +8,15 @@ import org.example.service.ServiceService;
 import java.util.List;
 
 public class ServiceServiceImpl implements ServiceService {
-    private ServiceEntityRepository serviceEntityRepository = new ServiceEntityRepositoryImpl();
+    private ServiceEntityRepository serviceEntityRepository;
+
+    public ServiceServiceImpl() {
+        this.serviceEntityRepository = new ServiceEntityRepositoryImpl();
+    }
+
+    public ServiceServiceImpl(ServiceEntityRepository serviceEntityRepository) {
+        this.serviceEntityRepository = serviceEntityRepository;
+    }
 
     @Override
     public boolean deleteById(Integer id) {

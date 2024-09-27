@@ -6,10 +6,17 @@ import org.example.repository.impl.AnimalEntityRepositoryImpl;
 import org.example.service.AnimalService;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AnimalServiceImpl implements AnimalService {
-    private AnimalEntityRepository animalEntityRepository = new AnimalEntityRepositoryImpl();
+    private AnimalEntityRepository animalEntityRepository;
+
+    public AnimalServiceImpl() {
+        this.animalEntityRepository = new AnimalEntityRepositoryImpl();
+    }
+
+    public AnimalServiceImpl(AnimalEntityRepository animalEntityRepository) {
+        this.animalEntityRepository = animalEntityRepository;
+    }
 
     @Override
     public boolean deleteById(Integer id) {
