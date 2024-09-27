@@ -1,5 +1,6 @@
 package org.example.repository.impl;
 
+import org.example.db.ConnectionManager;
 import org.example.db.ConnectionManagerImpl;
 import org.example.model.AnimalEntity;
 import org.example.model.ServiceEntity;
@@ -16,7 +17,15 @@ import java.util.List;
 public class ServiceEntityRepositoryImpl implements ServiceEntityRepository {
     private ServiceResultSetMapper resultSetMapper = new ServiceResultSetMapperImpl();
     private AnimalResultSetMapper animalMapper = new AnimalResultSetMapperImpl();
-    private ConnectionManagerImpl connectionManager = ConnectionManagerImpl.getInstance();
+    private ConnectionManager connectionManager;
+
+    public ServiceEntityRepositoryImpl() {
+        this.connectionManager = ConnectionManagerImpl.getInstance();
+    }
+
+    public ServiceEntityRepositoryImpl(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     @Override
     public ServiceEntity findById(Integer id) {

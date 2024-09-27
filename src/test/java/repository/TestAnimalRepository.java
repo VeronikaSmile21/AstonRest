@@ -2,22 +2,16 @@ package repository;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.example.db.ConnectionManager;
-import org.example.db.ConnectionManagerImpl;
 import org.example.model.AnimalEntity;
 import org.example.repository.AnimalEntityRepository;
 import org.example.repository.impl.AnimalEntityRepositoryImpl;
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.MySQLContainer;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -75,6 +69,8 @@ public class TestAnimalRepository {
     public void testFindById() {
         AnimalEntity animalEntity = animalEntityRepository.findById(1);
         Assertions.assertEquals("Cat", animalEntity.getName());
+        // Тестирование ManyToMany
+        Assertions.assertEquals(3, animalEntity.getServices().size());
     }
 
     @Test

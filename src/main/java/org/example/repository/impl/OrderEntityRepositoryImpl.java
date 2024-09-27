@@ -1,5 +1,6 @@
 package org.example.repository.impl;
 
+import org.example.db.ConnectionManager;
 import org.example.db.ConnectionManagerImpl;
 import org.example.model.OrderEntity;
 import org.example.repository.OrderEntityRepository;
@@ -12,7 +13,15 @@ import java.util.List;
 
 public class OrderEntityRepositoryImpl implements OrderEntityRepository {
     private OrderResultSetMapper resultSetMapper = new OrderResultSetMapperImpl();
-    private ConnectionManagerImpl connectionManager = ConnectionManagerImpl.getInstance();
+    private ConnectionManager connectionManager;
+
+    public OrderEntityRepositoryImpl() {
+        this.connectionManager = ConnectionManagerImpl.getInstance();
+    }
+
+    public OrderEntityRepositoryImpl(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     @Override
     public OrderEntity findById(Integer id) {
