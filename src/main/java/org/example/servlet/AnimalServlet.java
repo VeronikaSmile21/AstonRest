@@ -18,13 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.UUID;
 
 @WebServlet("/animal")
 public class AnimalServlet extends HttpServlet {
-    private AnimalService animalService = new AnimalServiceImpl();
+    private AnimalService animalService = initAnimalService();
     private AnimalDtomapper animalDtomapper = new AnimalDtomapperImpl();
     private Gson gson = new Gson();
+
+    protected AnimalService initAnimalService() {
+        return new AnimalServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -6,9 +6,9 @@ import org.example.service.OrderService;
 import org.example.service.impl.OrderServiceImpl;
 import org.example.servlet.dto.OrderIncomingDto;
 import org.example.servlet.dto.OrderOutGoingDto;
+import org.example.servlet.mapper.MapperUtil;
 import org.example.servlet.mapper.OrderDtomapper;
 import org.example.servlet.mapper.OrderDtomapperImpl;
-import org.example.servlet.mapper.MapperUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,9 +22,13 @@ import java.util.stream.Collectors;
 
 @WebServlet("/order")
 public class OrderServlet extends HttpServlet {
-    private OrderService orderService = new OrderServiceImpl();
+    private OrderService orderService = initOrderService();
     private OrderDtomapper orderDtomapper = new OrderDtomapperImpl();
     private Gson gson = new Gson();
+
+    protected OrderService initOrderService() {
+        return new OrderServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

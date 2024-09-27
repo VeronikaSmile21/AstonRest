@@ -6,9 +6,9 @@ import org.example.service.ClientService;
 import org.example.service.impl.ClientServiceImpl;
 import org.example.servlet.dto.ClientIncomingDto;
 import org.example.servlet.dto.ClientOutGoingDto;
-import org.example.servlet.mapper.MapperUtil;
 import org.example.servlet.mapper.ClientDtomapper;
 import org.example.servlet.mapper.ClientDtomapperImpl;
+import org.example.servlet.mapper.MapperUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,9 +21,13 @@ import java.util.List;
 
 @WebServlet("/client")
 public class ClientServlet extends HttpServlet {
-    private ClientService clientService = new ClientServiceImpl();
+    private ClientService clientService = initClientService();
     private ClientDtomapper clientDtomapper = new ClientDtomapperImpl();
     private Gson gson = new Gson();
+
+    protected ClientService initClientService() {
+        return new ClientServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

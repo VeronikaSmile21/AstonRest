@@ -21,9 +21,13 @@ import java.util.List;
 
 @WebServlet("/service")
 public class ServiceServlet extends HttpServlet {
-    private ServiceService serviceService = new ServiceServiceImpl();
+    private ServiceService serviceService = initServiceService();
     private ServiceDtomapper serviceDtomapper = new ServiceDtomapperImpl();
     private Gson gson = new Gson();
+
+    protected ServiceService initServiceService() {
+        return new ServiceServiceImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
