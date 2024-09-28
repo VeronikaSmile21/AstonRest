@@ -21,6 +21,7 @@ import java.util.List;
 
 @WebServlet("/service")
 public class ServiceServlet extends HttpServlet {
+    public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json;charset=UTF-8";
     private ServiceService serviceService = initServiceService();
     private ServiceDtomapper serviceDtomapper = new ServiceDtomapperImpl();
     private Gson gson = new Gson();
@@ -31,7 +32,7 @@ public class ServiceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json;charset=UTF-8");
+        resp.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         PrintWriter printWriter = resp.getWriter();
 
         String idParam = req.getParameter("id");
@@ -50,7 +51,7 @@ public class ServiceServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json;charset=UTF-8");
+        resp.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         PrintWriter printWriter = resp.getWriter();
 
         ServiceIncomingDto serviceIncomingDto = new ServiceIncomingDto();
@@ -67,7 +68,7 @@ public class ServiceServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json;charset=UTF-8");
+        resp.setContentType(APPLICATION_JSON_CHARSET_UTF_8);
         PrintWriter printWriter = resp.getWriter();
 
         String idParam = req.getParameter("id");

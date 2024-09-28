@@ -29,16 +29,15 @@ public class AnimalEntityRepositoryImpl implements AnimalEntityRepository {
 
     @Override
     public AnimalEntity findById(Integer id) {
+        String sql = "SELECT a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff, " +
+                "s.id as s_id, s.name as s_name, s.price as s_price " +
+                "FROM `animal` as a " +
+                "inner join `service_animal` as sa on sa.animal_id = a.id " +
+                "inner join `service` as s on s.id = sa.service_id " +
+                "where a.id = ?";
         // Здесь используем try with resources
-        try {
-            Connection connection = connectionManager.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff, " +
-                            "s.id as s_id, s.name as s_name, s.price as s_price " +
-                            "FROM `animal` as a " +
-                            "inner join `service_animal` as sa on sa.animal_id = a.id " +
-                            "inner join `service` as s on s.id = sa.service_id " +
-                            "where a.id = ?");
+        try(Connection connection = connectionManager.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -61,17 +60,17 @@ public class AnimalEntityRepositoryImpl implements AnimalEntityRepository {
 
     @Override
     public boolean deleteById(Integer id) {
-
         try (Connection connection = connectionManager.getConnection()) {
             if (id > 0) {
                 //update
-                PreparedStatement pstmt = connection.prepareStatement("DELETE FROM animal WHERE id = ?");
-                pstmt.setInt(1, id);
-                int affectedRows = pstmt.executeUpdate();
+                try (PreparedStatement pstmt = connection.prepareStatement("DELETE FROM animal WHERE id = ?")) {
+                    pstmt.setInt(1, id);
+                    int affectedRows = pstmt.executeUpdate();
 
-                if (affectedRows == 0) {
-                    return false;
-                    //throw new SQLException("Creating user failed, no rows affected.");
+                    if (affectedRows == 0) {
+                        return false;
+                        //throw new SQLException("Creating user failed, no rows affected.");
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -85,11 +84,10 @@ public class AnimalEntityRepositoryImpl implements AnimalEntityRepository {
     @Override
     public List<AnimalEntity> findAll() {
         List<AnimalEntity> result = new ArrayList<>();
-        try {
-            Connection connection = connectionManager.getConnection();
+        try(Connection connection = connectionManager.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "select a.id as a_id, a.name as a_name, a.price_coeff as a_price_coeff " +
-                    " from animal as a");
+                    " from animal as a")) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 result.add(resultSetMapper.map(resultSet));
@@ -108,38 +106,38 @@ public class AnimalEntityRepositoryImpl implements AnimalEntityRepository {
 
             if (animalEntity.getId() > 0) {
                 //update
-                PreparedStatement pstmt = connection.prepareStatement(
-                        "UPDATE animal SET name = ?, price_coeff = ? WHERE id = ?");
-                pstmt.setString(1, animalEntity.getName());
-                pstmt.setDouble(2, animalEntity.getPriceCoeff());
-                pstmt.setInt(3, animalEntity.getId());
-                int affectedRows = pstmt.executeUpdate();
+                try(PreparedStatement pstmt = connection.prepareStatement(
+                        "UPDATE animal SET name = ?, price_coeff = ? WHERE id = ?")) {
+                    pstmt.setString(1, animalEntity.getName());
+                    pstmt.setDouble(2, animalEntity.getPriceCoeff());
+                    pstmt.setInt(3, animalEntity.getId());
+                    int affectedRows = pstmt.executeUpdate();
 
-                if (affectedRows == 0) {
-                    throw new SQLException("Creating user failed, no rows affected.");
-                }
-
-            } else {
-                //insert
-                PreparedStatement pstmt = connection.prepareStatement(
-                        "INSERT INTO animal (name, price_coeff) VALUES (?, ?)",
-                        Statement.RETURN_GENERATED_KEYS);
-                pstmt.setString(1, animalEntity.getName());
-                pstmt.setDouble(2, animalEntity.getPriceCoeff());
-                int affectedRows = pstmt.executeUpdate();
-
-                if (affectedRows == 0) {
-                    throw new SQLException("Creating user failed, no rows affected.");
-                }
-
-                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        animalEntity.setId(generatedKeys.getInt(1));
-                    } else {
-                        throw new SQLException("Creating user failed, no ID obtained.");
+                    if (affectedRows == 0) {
+                        throw new SQLException("Creating user failed, no rows affected.");
                     }
                 }
+            } else {
+                //insert
+                try(PreparedStatement pstmt = connection.prepareStatement(
+                        "INSERT INTO animal (name, price_coeff) VALUES (?, ?)",
+                        Statement.RETURN_GENERATED_KEYS)) {
+                    pstmt.setString(1, animalEntity.getName());
+                    pstmt.setDouble(2, animalEntity.getPriceCoeff());
+                    int affectedRows = pstmt.executeUpdate();
 
+                    if (affectedRows == 0) {
+                        throw new SQLException("Creating user failed, no rows affected.");
+                    }
+
+                    try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            animalEntity.setId(generatedKeys.getInt(1));
+                        } else {
+                            throw new SQLException("Creating user failed, no ID obtained.");
+                        }
+                    }
+                }
             }
 
         } catch (SQLException e) {
