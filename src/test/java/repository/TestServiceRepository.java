@@ -6,6 +6,7 @@ import org.example.model.ServiceEntity;
 import org.example.repository.ServiceEntityRepository;
 import org.example.repository.impl.ServiceEntityRepositoryImpl;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.jupiter.api.*;
 import org.testcontainers.containers.MySQLContainer;
 
@@ -27,7 +28,7 @@ public class TestServiceRepository {
             .withPassword("password")
             .withDatabaseName("vet_clinic");
 
-    public static ConnectionManager connectionManager;
+    static public ConnectionManager connectionManager;
 
 
     @BeforeAll
@@ -85,7 +86,7 @@ public class TestServiceRepository {
     @Test
     public void testUpdate() {
         ServiceEntity serviceEntity = serviceEntityRepository.findById(2);
-        Assertions.assertEquals("Castration", serviceEntity.getName());
+        Assertions.assertEquals("Chipping", serviceEntity.getName());
         serviceEntity.setName("Dental_prosthesis");
         ServiceEntity saved = serviceEntityRepository.save(serviceEntity);
         Assertions.assertEquals("Dental_prosthesis", serviceEntity.getName());
@@ -96,11 +97,11 @@ public class TestServiceRepository {
     @Test
     public void testDelete() {
        List<ServiceEntity> serviceEntities = serviceEntityRepository.findAll();
-       Assertions.assertEquals(3, serviceEntities.size());
+       Assertions.assertEquals(4, serviceEntities.size());
        boolean result = serviceEntityRepository.deleteById(1);
        Assertions.assertTrue(result);
        List<ServiceEntity> serviceEntities2 = serviceEntityRepository.findAll();
-       Assertions.assertEquals(2, serviceEntities2.size());
+       Assertions.assertEquals(3, serviceEntities2.size());
     }
 
     @AfterAll
